@@ -8,7 +8,7 @@ interface AuthContextProps {
   user: AppUser | null;
   loading: boolean;
   login: (email: string, password: string) => Promise<AppUser | null>;
-  registro: (email: string, password: string, firstName: string, lastName: string) => Promise<AppUser>;
+  registro: (email: string, password: string, firstName: string, lastName: string,role:"admin" |"user"|"superuser") => Promise<AppUser>;
   logout: () => Promise<void>;
   loginWithGoogleContext: ()=> Promise<AppUser>
 }
@@ -28,6 +28,7 @@ export const AuthContext = createContext<AuthContextProps>({
       email: '',
       firstName: '',
       lastName: '',
+      role:'user'
     };
   },
 });
@@ -63,9 +64,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       email: string,
       password: string,
       firstName: string,
-      lastName: string
+      lastName: string,
+      role:"admin" |"user"|"superuser",
     ): Promise<AppUser> => {
-      const newUser = await registerUser(email, password, firstName, lastName);
+      const newUser = await registerUser(email, password, firstName, lastName,role);
       setUser(newUser);
       return newUser;
     };

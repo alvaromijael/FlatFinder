@@ -7,7 +7,8 @@ export const registerUser = async (
   email: string,
   password: string,
   firstName: string,
-  lastName: string
+  lastName: string,
+  role:"admin" |"user"|"superuser"="user"
 ) => {
   const userCredential = await createUserWithEmailAndPassword(
     auth,
@@ -16,7 +17,7 @@ export const registerUser = async (
   );
 
   const { uid } = userCredential.user;
-  const newUser: AppUser = { uid, email, firstName, lastName };
+  const newUser: AppUser = { uid, email, firstName, lastName,role };
   await setDoc(doc(db,'users',uid), newUser);
 
   return newUser;
@@ -67,6 +68,7 @@ export const loginWithGoogle = async():  Promise<AppUser> =>{
     email:user.email ?? '', 
     firstName: user.displayName?.split(' ')[0] ?? '', 
     lastName:user.displayName?.split(' ')[1] ?? '', 
+    role:'user'
   }
 
 
