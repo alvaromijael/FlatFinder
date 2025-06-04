@@ -1,9 +1,11 @@
-import { Grid, Typography } from "@mui/material";
+import { Card, Typography } from "antd";
 import type { ReactNode } from "react";
+
+const { Title } = Typography;
 
 interface AuthLayoutProps {
   children: ReactNode;
-  description: string;
+  description?: string;
 }
 
 export const AuthLayout: React.FC<AuthLayoutProps> = ({
@@ -11,30 +13,32 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
   description = "",
 }) => {
   return (
-    <Grid
-      container
-      spacing={1}
-      alignItems="center"
-      justifyContent="center"
-      sx={{
-        margin: 1,
-        padding: 2,
-        minHeight: "calc(100vh - 20px)",
-        boxSizing: "border-box",
+    <div
+      style={{
+        minHeight: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        background: "#f0f2f5",
+        padding: "20px",
       }}
     >
-      <Grid 
-        sx={{
-            width: {sm: 450},
-            background: '#eee',
-            padding:4,
-            borderRadius: 2
+      <Card
+        bordered={false}
+        style={{
+          width: 500,
+          borderRadius: 12,
+          boxShadow: "0 8px 24px rgba(0,0,0,0.1)",
+          backgroundColor: "#ffffff",
         }}
       >
-        <Typography variant="body1">{description}</Typography>
-
+        {description && (
+          <Title level={3} style={{ marginBottom: 20 }}>
+            {description}
+          </Title>
+        )}
         {children}
-      </Grid>
-    </Grid>
-  );
+      </Card>
+    </div>
+  );
 };
