@@ -1,14 +1,10 @@
-import { Button } from "./components/ui/button"
+import { AuthProvider } from "./auth/context/AuthContext"
+import { AppRouter } from "./router/AppRouter"
 
-function App() {
-
-
+export const App = () => {
   return (
-    <>
-      <h1 className="text-3xl font-bold underline">Hola mundo</h1>
-      <Button variant="outline">Click me</Button>
-    </>
+    <AuthProvider>
+        <AppRouter/>
+    </AuthProvider>
   )
 }
-
-export default App
