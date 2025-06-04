@@ -21,7 +21,7 @@ export const LoginPage = () => {
         navigate("/");
       }
     } catch (error) {
-      console.error("Error al iniciar sesión:", error);
+      console.error("Error al iniciar sesión: mascadores", error);
     }
   };
 
