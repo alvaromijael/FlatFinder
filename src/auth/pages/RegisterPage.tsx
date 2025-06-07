@@ -43,7 +43,8 @@ export const RegisterPage = () => {
         data.email,
         data.password,
         data.firstName,
-        data.lastName
+        data.lastName,
+        "user"
       );
       if (user) {
         message.success("Registro exitoso");
