@@ -1,5 +1,5 @@
 import { LockOutlined, MailOutlined, GoogleOutlined } from "@ant-design/icons";
-import { Button, Card, Form, Input, Typography, Space, message } from "antd";
+import { Button, Card, Form, Input, Typography, Space} from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 import { useState } from "react";
