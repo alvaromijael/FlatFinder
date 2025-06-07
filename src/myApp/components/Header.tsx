@@ -38,17 +38,16 @@ export const Header = () => {
         icon: <HomeOutlined />,
       },
       {
-        label: <Link to="/my-flats">Mis Flats</Link>,
-        key: "/my-flats",
-        icon: <AppstoreOutlined />,
-      },
-      {
         label: <Link to="/new-flat">Nueva Flat</Link>,
         key: "/new-flat",
         icon: <AppstoreOutlined />,
       },
-
       {
+        label: <Link to="/my-flats">Mis Flats</Link>,
+        key: "/my-flats",
+        icon: <AppstoreOutlined />,
+      },
+            {
         label: <Link to="/favourites">Favoritos</Link>,
         key: "/favourites",
         icon: <StarOutlined />,

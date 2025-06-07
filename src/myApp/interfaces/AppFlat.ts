@@ -13,4 +13,5 @@ export interface AppFlat {
     rentPrice: number;
     dateAvailable: Timestamp;
     creatorUid: string;
+    isFavorite?: boolean; 
 }

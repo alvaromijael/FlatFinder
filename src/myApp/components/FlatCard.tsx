@@ -1,8 +1,12 @@
 import React from "react";
-import { Card, CardContent, CardMedia, Typography } from "@mui/material";
+import { Box, Card, CardContent, CardMedia, IconButton, Typography } from "@mui/material";
 import type { Timestamp } from "firebase/firestore";
+import type { AppFlat } from "../interfaces/AppFlat";
+import { updateFavoriteStatus } from "../services/UpdateFavoriteFlat";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
-type FlatCardProps = {
+/*type FlatCardProps = {
   src: string;
   name: string;
   city: string;
@@ -13,6 +17,10 @@ type FlatCardProps = {
   yearBuilt: number;
   rentPrice: number;
   dateAvailable: Timestamp;
+};*/
+
+type FlatCardProps = AppFlat & {
+  onFavoriteToggle?: (newValue: boolean) => void;
 };
 
 export const FlatCard = ({
@@ -26,11 +34,21 @@ export const FlatCard = ({
   yearBuilt,
   rentPrice,
   dateAvailable,
+  uid,
+  isFavorite = false,
+  onFavoriteToggle,
 }: FlatCardProps) => {
+  const handleFavoriteClick = async () => {
+    const newFavorite = !isFavorite;
+    await updateFavoriteStatus(uid, newFavorite);
+    onFavoriteToggle?.(newFavorite); // pasa el nuevo valor
+  };
+
   return (
     <Card
       elevation={3}
       sx={{
+        position: "relative",
         borderRadius: 2,
         transition: "transform 0.3s",
         "&:hover": {
@@ -63,6 +81,19 @@ export const FlatCard = ({
           $ {rentPrice}
         </Typography>
       </CardContent>
+
+      {/* Botón de favorito */}
+      <Box
+        sx={{
+          position: "absolute",
+          bottom: 8,
+          right: 8,
+        }}
+      >
+        <IconButton onClick={handleFavoriteClick} sx={{ color: "red" }}>
+          {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+        </IconButton>
+      </Box>
     </Card>
   );
 };
