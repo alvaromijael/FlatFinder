@@ -1,7 +1,9 @@
-import React from 'react'
+import { FlatGrid } from "../components/FlatGrid";
 
 export const HomePage = () => {
   return (
-    <div>HomePage</div>
-  )
-}
+    <div className="m-5">
+      <FlatGrid />
+    </div>
+  );
+};

@@ -42,6 +42,11 @@ export const Header = () => {
         key: "/my-flats",
         icon: <AppstoreOutlined />,
       },
+      {
+        label: <Link to="/new-flat">Nueva Flat</Link>,
+        key: "/new-flat",
+        icon: <AppstoreOutlined />,
+      },
 
       {
         label: <Link to="/favourites">Favoritos</Link>,
