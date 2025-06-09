@@ -7,6 +7,7 @@ import { MyFlatsPage } from "../pages/MyFlatsPage";
 import { FavoritesPage } from "../pages/FavoritesPage";
 import { AllUsersPage } from "../pages/AllUsersPage";
 import { NewFlat } from "../pages/NewFlat";
+import { WelcomePage } from "../pages/WelcomePage";
 
 
 export const MyAppRouter = () => {
@@ -14,7 +15,8 @@ export const MyAppRouter = () => {
     <>
       <Header />
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<WelcomePage />} />
+        <Route path="/home" element={<HomePage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/my-flats" element={<MyFlatsPage />} />
         <Route path="/new-flat" element={<NewFlat />} />
