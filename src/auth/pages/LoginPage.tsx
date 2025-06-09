@@ -2,7 +2,7 @@ import { LockOutlined, MailOutlined, GoogleOutlined } from "@ant-design/icons";
 import { Button, Card, Form, Input, Typography, Space} from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const { Title, Text } = Typography;
 
@@ -22,8 +22,9 @@ export const LoginPage = () => {
   const onFinish = async (values: LoginFormData) => {
     try {
       const user = await login(values.email, values.password);
+      
       if (user) {
-        navigate("/");
+        navigate("/home");
       }
     } catch (error) {
       console.error("Error al iniciar sesión: mascadores", error);
@@ -35,7 +36,7 @@ export const LoginPage = () => {
   const handleGoogleLogin = async () => {
     try {
       const user = await loginWithGoogleContext();
-      if (user) navigate("/", { replace: true });
+      if (user) navigate("/home", { replace: true });
     } catch (error) {
       console.error("Error con login de Google:", error);
     }
