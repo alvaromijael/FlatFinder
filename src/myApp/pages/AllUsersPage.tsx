@@ -109,10 +109,10 @@ export const AllUsersPage = () => {
       <Title level={3}>Gestión de Usuarios</Title>
       <Table rowKey="id" columns={columns} dataSource={users} loading={loading} pagination={{ pageSize: 10 }} />
 
-      {/* Modal de edición */}
+      
       <Modal
         title="Editar Usuario"
-        visible={isModalVisible}
+        open={isModalVisible}
         onCancel={() => setIsModalVisible(false)}
         footer={[
           <Button key="cancel" onClick={() => setIsModalVisible(false)}>Cancelar</Button>,

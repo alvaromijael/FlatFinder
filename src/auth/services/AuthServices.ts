@@ -1,7 +1,7 @@
 import { createUserWithEmailAndPassword, getAdditionalUserInfo, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import { auth, db } from "../../firebase/firebase";
 import type { AppUser } from "../interfaces/AppUser";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 
 export const registerUser = async (
   email: string,
@@ -79,3 +79,12 @@ export const loginWithGoogle = async():  Promise<AppUser> =>{
 
   return userData;
 }
+
+export const updateUserData = async (user: AppUser): Promise<void> => {
+  const userRef = doc(db, "users", user.uid);
+  await updateDoc(userRef, {
+    firstName: user.firstName,
+    lastName: user.lastName,
+    role: user.role,
+  });
+};
