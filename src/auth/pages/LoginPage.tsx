@@ -1,7 +1,8 @@
 import { LockOutlined, MailOutlined, GoogleOutlined } from "@ant-design/icons";
-import { Button, Card, Form, Input, Typography, Space } from "antd";
+import { Button, Card, Form, Input, Typography, Space} from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
+import { useEffect, useState } from "react";
 
 const { Title, Text } = Typography;
 
@@ -10,25 +11,32 @@ interface LoginFormData {
   password: string;
 }
 
+
+
 export const LoginPage = () => {
   const navigate = useNavigate();
   const { login, loginWithGoogleContext } = useAuthContext();
+  const [messageError, setmessageError] = useState("");
+  const [form] = Form.useForm();
 
   const onFinish = async (values: LoginFormData) => {
     try {
       const user = await login(values.email, values.password);
+      
       if (user) {
-        navigate("/");
+        navigate("/home");
       }
     } catch (error) {
       console.error("Error al iniciar sesión: mascadores", error);
+      setmessageError("Usuario o contraseña inválida");
+      form.resetFields();
     }
   };
 
   const handleGoogleLogin = async () => {
     try {
       const user = await loginWithGoogleContext();
-      if (user) navigate("/", { replace: true });
+      if (user) navigate("/home", { replace: true });
     } catch (error) {
       console.error("Error con login de Google:", error);
     }
@@ -57,7 +65,7 @@ export const LoginPage = () => {
           boxShadow: "0 8px 24px rgba(0,0,0,0.1)",
         }}
       >
-        <Form layout="vertical" onFinish={onFinish}>
+        <Form form={form} layout="vertical" onFinish={onFinish}>
           <Form.Item
             label="Correo electrónico"
             name="email"
@@ -82,6 +90,19 @@ export const LoginPage = () => {
 
           <Form.Item>
             <Space direction="vertical" style={{ width: "100%" }}>
+              {messageError && (
+                <Text
+                  type="danger"
+                  style={{
+                    display: "block",
+                    textAlign: "center",
+                    marginBottom: 10,
+                  }}
+                >
+                  {messageError}
+                </Text>
+              )}
+
               <Button type="primary" htmlType="submit" block>
                 Iniciar sesión
               </Button>
@@ -103,6 +124,7 @@ export const LoginPage = () => {
           </Link>
         </Text>
       </Card>
-    </div>
-  );
+        
+    </div>
+  );
 };

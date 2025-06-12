@@ -22,7 +22,7 @@ export const Header = () => {
   const handleLogout = async () => {
     try {
       await logout();
-      navigate("/auth/login", { replace: true });
+      navigate("/", { replace: true });
     } catch (error) {
       console.error("Error al cerrar sesión: ", error);
     }
@@ -33,8 +33,8 @@ export const Header = () => {
   if (user) {
     menuItems.push(
       {
-        label: <Link to="/">Inicio</Link>,
-        key: "/",
+        label: <Link to="/home">Inicio</Link>,
+        key: "/home",
         icon: <HomeOutlined />,
       },
       {

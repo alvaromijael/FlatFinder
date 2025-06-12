@@ -8,9 +8,10 @@ interface AuthContextProps {
   user: AppUser | null;
   loading: boolean;
   login: (email: string, password: string) => Promise<AppUser | null>;
-  registro: (email: string, password: string, firstName: string, lastName: string,role:"admin" |"user"|"superuser") => Promise<AppUser>;
+  registro: (email: string, password: string, firstName: string, lastName: string,role:"admin" |"user"|"superadmin") => Promise<AppUser>;
   logout: () => Promise<void>;
-  loginWithGoogleContext: ()=> Promise<AppUser>
+  loginWithGoogleContext: ()=> Promise<AppUser>;
+  setUserContext: (user: AppUser) => void;
 }
 
 export const AuthContext = createContext<AuthContextProps>({
@@ -31,6 +32,7 @@ export const AuthContext = createContext<AuthContextProps>({
       role:'user'
     };
   },
+  setUserContext: async() => {},
 });
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -39,7 +41,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
     const [user, setUser] = useState<AppUser | null>(null);
     const [loading, setLoading] = useState(true);
-  
+    const setUserContext = (user: AppUser) => {
+    setUser(user);
+    };
     useEffect(() => {
       const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
         if (firebaseUser) {
@@ -65,7 +69,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       password: string,
       firstName: string,
       lastName: string,
-      role:"admin" |"user"|"superuser",
+      role:"admin" |"user"|"superadmin",
     ): Promise<AppUser> => {
       const newUser = await registerUser(email, password, firstName, lastName,role);
       setUser(newUser);
@@ -92,7 +96,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         login,
         registro,
         logout,
-        loginWithGoogleContext
+        loginWithGoogleContext,
+        setUserContext,
       }}
     >
       {children}

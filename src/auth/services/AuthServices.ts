@@ -1,14 +1,14 @@
 import { createUserWithEmailAndPassword, getAdditionalUserInfo, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import { auth, db } from "../../firebase/firebase";
 import type { AppUser } from "../interfaces/AppUser";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 
 export const registerUser = async (
   email: string,
   password: string,
   firstName: string,
   lastName: string,
-  role:"admin" |"user"|"superuser"="user"
+  role:"admin" |"user"|"superadmin"="user"
 ) => {
   const userCredential = await createUserWithEmailAndPassword(
     auth,
@@ -68,7 +68,7 @@ export const loginWithGoogle = async():  Promise<AppUser> =>{
     email:user.email ?? '', 
     firstName: user.displayName?.split(' ')[0] ?? '', 
     lastName:user.displayName?.split(' ')[1] ?? '', 
-    role:'user'
+    role:'user',
   }
 
 
@@ -79,3 +79,12 @@ export const loginWithGoogle = async():  Promise<AppUser> =>{
 
   return userData;
 }
+
+export const updateUserData = async (user: AppUser): Promise<void> => {
+  const userRef = doc(db, "users", user.uid);
+  await updateDoc(userRef, {
+    firstName: user.firstName,
+    lastName: user.lastName,
+    role: user.role,
+  });
+};
