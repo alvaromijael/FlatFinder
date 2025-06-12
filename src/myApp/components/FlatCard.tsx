@@ -1,23 +1,12 @@
 import React from "react";
-import { Box, Card, CardContent, CardMedia, IconButton, Typography } from "@mui/material";
+import { Box, Button, Card, CardContent, CardMedia, IconButton, Typography } from "@mui/material";
 import type { Timestamp } from "firebase/firestore";
 import type { AppFlat } from "../interfaces/AppFlat";
 import { updateFavoriteStatus } from "../services/UpdateFavoriteFlat";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-
-/*type FlatCardProps = {
-  src: string;
-  name: string;
-  city: string;
-  streetName: string;
-  streetNumber: string;
-  areaSize: number;
-  hasAC: boolean;
-  yearBuilt: number;
-  rentPrice: number;
-  dateAvailable: Timestamp;
-};*/
+import { useAuthContext } from "@/auth/context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 type FlatCardProps = AppFlat & {
   onFavoriteToggle?: (newValue: boolean) => void;
@@ -35,6 +24,7 @@ export const FlatCard = ({
   rentPrice,
   dateAvailable,
   uid,
+  creatorUid,
   isFavorite = false,
   onFavoriteToggle,
 }: FlatCardProps) => {
@@ -42,6 +32,52 @@ export const FlatCard = ({
     const newFavorite = !isFavorite;
     await updateFavoriteStatus(uid, newFavorite);
     onFavoriteToggle?.(newFavorite); // pasa el nuevo valor
+  };
+
+  const { user } = useAuthContext();
+
+  const navigate = useNavigate();
+
+  const handleUpdateClick = () => {
+    navigate(`/update-flat/${uid}`, {
+      state: {
+        flat: {
+          src,
+          name,
+          city,
+          streetName,
+          streetNumber,
+          areaSize,
+          hasAC,
+          yearBuilt,
+          rentPrice,
+          dateAvailable,
+          uid,
+          creatorUid,
+        },
+      },
+    });
+  };
+
+  const handleCardClick = () => {
+    navigate(`/flat/${uid}`, {
+      state: {
+        flat: {
+          src,
+          name,
+          city,
+          streetName,
+          streetNumber,
+          areaSize,
+          hasAC,
+          yearBuilt,
+          rentPrice,
+          dateAvailable,
+          uid,
+          creatorUid,
+        },
+      },
+    });
   };
 
   return (
@@ -57,12 +93,19 @@ export const FlatCard = ({
         width: "100%",
       }}
     >
+      {/* Solo la imagen abre el detalle */}
       <CardMedia
         component="img"
         image={src}
         alt={name}
-        sx={{ height: 200, objectFit: "cover" }}
+        onClick={handleCardClick}
+        sx={{
+          height: 200,
+          objectFit: "cover",
+          cursor: "pointer",
+        }}
       />
+
       <CardContent>
         <Typography variant="h6" fontWeight="bold" gutterBottom>
           {name}
@@ -90,9 +133,39 @@ export const FlatCard = ({
           right: 8,
         }}
       >
-        <IconButton onClick={handleFavoriteClick} sx={{ color: "red" }}>
+        <IconButton
+          onClick={(e) => {
+            e.stopPropagation(); // ✅ Evita que dispare navegación
+            handleFavoriteClick();
+          }}
+          sx={{ color: "red" }}
+        >
           {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
         </IconButton>
+      </Box>
+
+      {/* Botón de actualizar o espacio en blanco */}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          pb: 2,
+        }}
+      >
+        {user?.uid === creatorUid ? (
+          <Button
+            onClick={(e) => {
+              e.stopPropagation(); // ✅ Evita que dispare navegación
+              handleUpdateClick();
+            }}
+            variant="outlined"
+            size="small"
+          >
+            Actualizar
+          </Button>
+        ) : (
+          <Box sx={{ height: 36 }} />
+        )}
       </Box>
     </Card>
   );

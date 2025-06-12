@@ -7,6 +7,8 @@ import { MyFlatsPage } from "../pages/MyFlatsPage";
 import { FavoritesPage } from "../pages/FavoritesPage";
 import { AllUsersPage } from "../pages/AllUsersPage";
 import { NewFlat } from "../pages/NewFlat";
+import { UpdateFlat } from "../pages/UpdateFlat";
+import { ItemFlat } from "../pages/ItemFlat";
 
 
 export const MyAppRouter = () => {
@@ -20,6 +22,8 @@ export const MyAppRouter = () => {
         <Route path="/new-flat" element={<NewFlat />} />
         <Route path="/favourites" element={<FavoritesPage />} />
         <Route path="/all-users" element={<AllUsersPage />} />
+        <Route path="/update-flat/:id" element={<UpdateFlat />} />
+        <Route path="/flat/:id" element={<ItemFlat />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </>
