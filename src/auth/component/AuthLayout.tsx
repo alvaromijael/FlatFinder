@@ -7,7 +7,6 @@ interface AuthLayoutProps {
   children: ReactNode;
   description?: string;
 }
-
 export const AuthLayout: React.FC<AuthLayoutProps> = ({
   children,
   description = "",
@@ -33,12 +32,19 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
         }}
       >
         {description && (
-          <Title level={3} style={{ marginBottom: 20 }}>
-            {description}
-          </Title>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <img
+              src="/logo1.png" // Asegúrate de que la ruta es correcta
+              alt="Logo"
+              style={{ width: "60px", height: "60px", objectFit: "contain" }}
+            />
+            <Title level={3} style={{ marginBottom: 0 }}>
+              {description}
+            </Title>
+          </div>
         )}
         {children}
       </Card>
-    </div>
-  );
+    </div>
+  );
 };
