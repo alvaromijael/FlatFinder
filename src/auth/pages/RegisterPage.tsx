@@ -66,7 +66,7 @@ export const RegisterPage = () => {
   };
 
   return (
-    <AuthLayout description="Register Page">
+    <AuthLayout description="Registro">
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <Space direction="vertical" size="middle" style={{ width: "100%" }}>
           <Controller

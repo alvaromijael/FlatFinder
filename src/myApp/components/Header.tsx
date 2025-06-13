@@ -6,16 +6,17 @@ import {
   StarOutlined,
   AppstoreOutlined,
   TeamOutlined,
+  MenuOutlined, // Nuevo icono de menú para móviles
 } from "@ant-design/icons";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useAuthContext } from "../../auth/context/AuthContext";
+import FlatFinderIcon from "./logo.png";
 
 const { Header: AntHeader } = Layout;
 const { Text } = Typography;
 
 export const Header = () => {
   const { user, logout } = useAuthContext();
-  console.log("User in Header: ", user);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -47,16 +48,12 @@ export const Header = () => {
         key: "/my-flats",
         icon: <AppstoreOutlined />,
       },
-            {
+      {
         label: <Link to="/favourites">Favoritos</Link>,
         key: "/favourites",
         icon: <StarOutlined />,
       },
-      {
-        label: <Link to="/profile">Mi Perfil</Link>,
-        key: "/profile",
-        icon: <UserOutlined />,
-      }
+     
     );
   }
 
@@ -71,11 +68,17 @@ export const Header = () => {
   const dropdownMenu = (
     <Menu
       items={[
+         {
+        label: <Link to="/profile">Mi Perfil</Link>,
+        key: "/profile",
+        icon: <UserOutlined />,
+      },
         {
           key: "logout",
           icon: <LogoutOutlined />,
           label: <span onClick={handleLogout}>Cerrar sesión</span>,
         },
+
       ]}
     />
   );
@@ -84,47 +87,54 @@ export const Header = () => {
     <AntHeader
       style={{
         background: "#fff",
-        padding: "0 2rem",
+        padding: "0 1rem",
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
         boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
+        flexWrap: "wrap",
       }}
     >
-      <Text style={{ fontSize: "20px", fontWeight: 600 }}>🏠 FlatFinder</Text>
+      {/* Logo y título */}
+      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        <img
+          src="/logo.png"
+          alt="FlatFinder"
+          style={{ width: "50px", height: "50px" }}
+        />
+        <Text style={{ fontSize: "18px", fontWeight: 600 }}>FlatFinder</Text>
+      </div>
 
-      <Menu
-        mode="horizontal"
-        selectedKeys={[location.pathname]}
-        style={{ flex: 1, justifyContent: "center", borderBottom: "none" }}
-        items={menuItems}
-      />
+      {/* Menú horizontal en pantallas grandes */}
+      <div className="menu-container">
+        <Menu
+          mode="horizontal"
+          selectedKeys={[location.pathname]}
+          style={{ flex: 1, justifyContent: "center", borderBottom: "none" }}
+          items={menuItems}
+        />
+      </div>
 
+      {/* Dropdown para menú en móviles */}
+      <Dropdown overlay={<Menu items={menuItems} />} trigger={["click"]}>
+        <Button type="text" className="mobile-menu">
+          <MenuOutlined style={{ fontSize: "20px" }} />
+        </Button>
+      </Dropdown>
+
+      {/* Usuario / Login */}
       {user ? (
-        <Dropdown
-          overlay={dropdownMenu}
-          placement="bottomRight"
-          trigger={["click"]}
-        >
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              cursor: "pointer",
-              gap: 10,
-            }}
-          >
+        <Dropdown overlay={dropdownMenu} placement="bottomRight" trigger={["click"]}>
+          <div style={{ display: "flex", alignItems: "center", cursor: "pointer", gap: 10 }}>
             <Avatar icon={<UserOutlined />} />
             <Text>{user.firstName}</Text>
           </div>
         </Dropdown>
       ) : (
         <Button type="primary">
-          <Link to="/auth/login" style={{ color: "#fff" }}>
-            Iniciar sesión
-          </Link>
+          <Link to="/auth/login" style={{ color: "#fff" }}>Iniciar sesión</Link>
         </Button>
       )}
     </AntHeader>
-  );
+  );
 };
