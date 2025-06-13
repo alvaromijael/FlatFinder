@@ -10,7 +10,7 @@ import {
 } from "@ant-design/icons";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useAuthContext } from "../../auth/context/AuthContext";
-import FlatFinderIcon from "./logo.png";
+
 
 const { Header: AntHeader } = Layout;
 const { Text } = Typography;
@@ -95,17 +95,20 @@ export const Header = () => {
         flexWrap: "wrap",
       }}
     >
-      {/* Logo y título */}
-      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-        <img
-          src="/logo.png"
-          alt="FlatFinder"
-          style={{ width: "50px", height: "50px" }}
-        />
-        <Text style={{ fontSize: "18px", fontWeight: 600 }}>FlatFinder</Text>
-      </div>
+    
+    <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+  <Link to="/"> {/* Cambia "/home" por la ruta que necesites */}
+    <img
+      src="/logo.png"
+      alt="FlatFinder"
+      style={{ width: "50px", height: "50px", cursor: "pointer" }} 
+    />
+  </Link>
+  <Text style={{ fontSize: "18px", fontWeight: 600 }}>FlatFinder</Text>
+</div>
 
-      {/* Menú horizontal en pantallas grandes */}
+
+      
       <div className="menu-container">
         <Menu
           mode="horizontal"

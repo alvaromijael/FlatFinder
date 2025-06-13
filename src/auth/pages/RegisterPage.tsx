@@ -168,7 +168,7 @@ export const RegisterPage = () => {
             <Text type="danger">{errors.confirmPassword.message}</Text>
           )}
 
-          <Button type="primary" htmlType="submit" block>
+          <Button type="primary" htmlType="submit" block style={{ background: "#333", color: "#fff", borderRadius: "8px" }}>
             Registrarse
           </Button>
 

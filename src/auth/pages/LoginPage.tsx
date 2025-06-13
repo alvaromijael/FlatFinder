@@ -136,7 +136,7 @@ export const LoginPage = () => {
 
       <Text style={{ display: "block", textAlign: "center", color: "#333" }}>
         ¿No tienes cuenta?{" "}
-        <Link to="/auth/register" style={{ fontWeight: 500, color: "#333" }}>
+        <Link to="/auth/register" style={{ fontWeight: 500 }}>
           Regístrate
         </Link>
       </Text>
