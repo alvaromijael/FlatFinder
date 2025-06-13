@@ -1,6 +1,7 @@
 .home-container {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   padding: 80px;
@@ -77,6 +78,7 @@
   margin-top: 40px;
   border-radius: 12px;
   display:flex;
+  flex-wrap: wrap;
   justify-content: center;
 
 }
