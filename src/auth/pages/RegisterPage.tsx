@@ -66,7 +66,7 @@ export const RegisterPage = () => {
   };
 
   return (
-    <AuthLayout description="Register Page">
+    <AuthLayout description="Registro">
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <Space direction="vertical" size="middle" style={{ width: "100%" }}>
           <Controller
@@ -168,7 +168,7 @@ export const RegisterPage = () => {
             <Text type="danger">{errors.confirmPassword.message}</Text>
           )}
 
-          <Button type="primary" htmlType="submit" block>
+          <Button type="primary" htmlType="submit" block style={{ background: "#333", color: "#fff", borderRadius: "8px" }}>
             Registrarse
           </Button>
 
